@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Details</title>
+</head>
+<body>
+    <%- include("../partials/navbar") %>
+    <h1>Appointment Details</h1>
+    <h2>
+        <%= appointment.title %>
+    </h2>
+    <p>
+        Service:
+        <%= appointment.service %>
+    </p>
+    <p>
+        Date:
+        <%= appointment.date %>
+    </p>
+
+    <p>
+        Time:
+        <%= appointment.startTime %>
+        -
+        <%= appointment.endTime %>
+    </p>
+    <p>
+        Notes:
+        <%= appointment.notes %>
+    </p>
+    <p>
+        provider:
+         <%= appointment.provider %>
+
+    </p>
+    <a href="/appointments">
+        Back to Appointments
+    </a>
+</body>
+</html>

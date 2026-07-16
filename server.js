@@ -59,7 +59,7 @@ app.use(passUserToView)
 app.use('/auth',authController)
 app.use('/appointments',appointmentController)
 // app.use('/avalability',availabilityController)
-// app.use('/user',userController)
+ app.use('/user',userController)
 
 
 
