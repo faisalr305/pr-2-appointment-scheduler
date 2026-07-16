@@ -25,7 +25,6 @@ Appointment Scheduler is a full-stack web application that allows users to book,
 - Mongoose
 
 ### Authentication
-- JWT
 - bcrypt
 
 ### Tools

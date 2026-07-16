@@ -7,10 +7,19 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
+
+  email:{
+    type:String,
+
+  },
   password: {
     type: String,
     required: true,
   },
+  role:{
+    type:String,
+    required:true
+  }
 }, {timestamps: true});
 
 const User = mongoose.model("User", userSchema);
