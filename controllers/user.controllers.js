@@ -52,4 +52,13 @@ router.put("/:appointmentId", isSignedIn, async (req, res) => {
     res.redirect("/appointments/" + req.params.appointmentId);
 
 });
+router.delete("/:appointmentId", isSignedIn, async (req, res) => {
+
+    await Appointment.findByIdAndDelete(
+        req.params.appointmentId
+    );
+
+    res.redirect("/appointments");
+
+});
 module.exports = router;
