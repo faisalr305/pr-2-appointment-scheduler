@@ -15,7 +15,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 // controller Imports
 const authController = require("./controllers/auth.controllers.js");
 const appointmentController = require("./controllers/appointment.controllers.js");
-const availabilityController = require("./controllers/avalability.controllers.js");
+const availabilityController = require("./controllers/availability.controllers.js");
 const userController = require("./controllers/user.controllers.js");
 
 
@@ -57,9 +57,10 @@ app.use(passUserToView)
 
 // Routes go here
 app.use('/auth',authController)
-app.use('/',appointmentController)
-app.use('/',avalabiltyController)
-app.use('/',userController)
+app.use('/appointments',appointmentController)
+// app.use('/avalability',availabilityController)
+// app.use('/user',userController)
+
 
 
 
