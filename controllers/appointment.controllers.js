@@ -47,4 +47,18 @@ router.post("/", isSignedIn, async (req, res) => {
 });
 
 
+router.get("/:appointmentId", isSignedIn, async (req, res) => {
+
+    const foundAppointment = await Appointment.findById(
+        req.params.appointmentId
+    );
+
+    res.render(
+        "appointments/details.ejs",
+        {appointment: foundAppointment}
+    );
+
+});
+
+
 module.exports = router;
