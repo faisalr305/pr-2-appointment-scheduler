@@ -2,10 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Providers</title>
 </head>
 <body>
-    <h1>providers</h1>
+
+<%- include("../partials/navbar") %>
+
+<h1>Providers</h1>
+
+<% providers.forEach((provider) => { %>
+
+    <div>
+
+        <h2><%= provider.username %></h2>
+
+        <a href="/users/providers/<%= provider.username %>">
+            View Appointments
+        </a>
+
+    </div>
+
+<% }) %>
+
 </body>
 </html>
