@@ -53,13 +53,16 @@ app.use(passUserToView)
 
 
 
+app.get('/',(req,res)=>{
+  res.render('homepage.ejs')
+})
 
 
 // Routes go here
 app.use('/auth',authController)
 app.use('/appointments',appointmentController)
 // app.use('/avalability',availabilityController)
- app.use('/user',userController)
+ app.use('/users',userController)
 
 
 
