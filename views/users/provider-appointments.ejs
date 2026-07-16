@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Provider Appointments</title>
+</head>
+<body>
+
+<%- include("../partials/navbar") %>
+
+<h1><%= provider %>'s Appointments</h1>
+
+<% appointments.forEach((appointment) => { %>
+
+    <div>
+
+        <h2><%= appointment.title %></h2>
+
+        <p>Service: <%= appointment.service %></p>
+
+        <p>Date: <%= appointment.date %></p>
+
+        <p>Time:
+            <%= appointment.startTime %> -
+            <%= appointment.endTime %>
+        </p>
+
+        <p>Notes: <%= appointment.notes %></p>
+
+    </div>
+
+<% }) %>
+
+<a href="/users/providers">Back to Providers</a>
+
+</body>
+</html>
