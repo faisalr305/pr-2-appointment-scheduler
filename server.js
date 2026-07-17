@@ -61,7 +61,7 @@ app.get('/',(req,res)=>{
 // Routes go here
 app.use('/auth',authController)
 app.use('/appointments',appointmentController)
-// app.use('/avalability',availabilityController)
+ app.use('/avalability',availabilityController)
  app.use('/users',userController)
 
 
