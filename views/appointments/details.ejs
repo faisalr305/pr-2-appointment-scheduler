@@ -34,6 +34,20 @@
          <%= appointment.provider %>
 
     </p>
+    <a href="/appointments/<%= appointment._id %>/edit">
+    Edit Appointment
+</a>
+
+<br><br>
+
+<form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST">
+
+    <button type="submit">
+        Delete Appointment
+    </button>
+
+</form>
+
     <a href="/appointments">
         Back to Appointments
     </a>
