@@ -9,14 +9,12 @@ router.get("/providers", async (req, res) => {
     const providers = await User.find({
         role: "provider"
     });
-console.log(providers);
+
     res.render("users/providers.ejs", {
         providers
     });
 
 });
-
-
 
 router.get("/providers/:provider", async (req, res) => {
 
@@ -31,5 +29,17 @@ router.get("/providers/:provider", async (req, res) => {
 
 });
 
+
+router.get("/my-appointments", async (req, res) => {
+const provider = req.session.user.username;
+    const appointments = await Appointment.find({
+        provider: req.session.user.username
+    });
+
+    res.render("users/provider-appointments.ejs", {
+        appointments,provider
+    });
+
+});
 
 module.exports = router;

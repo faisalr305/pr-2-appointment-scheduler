@@ -1,33 +1,77 @@
 const mongoose = require("mongoose");
 
-const availiblitySchema = new mongoose.Schema({
-
+const availabilitySchema = new mongoose.Schema(
+  {
     provider: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    date: {
+      type: Date,
+      required: true,
     },
 
     day: {
-        type: String,
-        required: true,
-        enum: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday",
-        ],
+      type: String,
+      enum: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      required: true,
     },
 
-    availableSlots: [
-        { type: String, },],
-}, { timestamps: true });
+    slots: [
+      {
+        time: {
+          type: String,
+          required: true,
+        },
+
+        status: {
+          type: String,
+          enum: ["available", "booked", "blocked"],
+          default: "available",
+        },
+
+        appointment: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Appointment",
+          default: null,
+        },
+      },
+    ],
+  },
+  { timestamps: true }
+);
+
+availabilitySchema.index(
+  { provider: 1, date: 1 },
+  { unique: true }
+);
 
 
 
-const Availiblity = mongoose.model("Availiblity", availiblitySchema);
+availabilitySchema.pre("validate", function (next) {
+  if (this.date) {
+    this.day = this.date.toLocaleDateString("en-US", {
+      weekday: "long",
+    });
+  }
 
-module.exports = Availiblity;
+  next();
+});
+
+
+const Availability = mongoose.model(
+  "Availability",
+  availabilitySchema
+);
+
+module.exports = Availability;

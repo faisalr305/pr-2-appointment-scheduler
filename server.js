@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
     }
 
     if (req.session.user.role === "provider") {
-        return res.render("provider-dashboard.ejs");
+        return res.redirect("/users/my-appointments");
     }
 
     res.render("users/customer-dashboard.ejs");
