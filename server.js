@@ -63,7 +63,7 @@ app.get("/", (req, res) => {
         return res.render("provider-dashboard.ejs");
     }
 
-    res.render("customer-dashboard.ejs");
+    res.render("users/customer-dashboard.ejs");
 
 });
 
