@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Availability</title>
+</head>
+<body>
+
+<%- include("../partials/navbar") %>
+
+<h1>Add Availability</h1>
+
+<form action="/availability" method="POST">
+
+    <label>Day</label>
+    <select name="day">
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+        <option>Sunday</option>
+    </select>
+
+    <br><br>
+
+    <label>Available Times</label>
+    <input
+        type="text"
+        name="availableSlots"
+        placeholder="09:00,10:00,11:00"
+    >
+
+    <br><br>
+
+    <button type="submit">
+        Save Availability
+    </button>
+
+</form>
+
+</body>
+</html>

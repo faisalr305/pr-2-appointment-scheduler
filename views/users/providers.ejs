@@ -12,15 +12,19 @@
 
 <% providers.forEach((provider) => { %>
 
-    <div>
+    <h2><%= provider.username %></h2>
 
-        <h2><%= provider.username %></h2>
+    <a href="/users/providers/<%= provider.username %>">
+        View Appointments
+    </a>
 
-        <a href="/users/providers/<%= provider.username %>">
-            View Appointments
-        </a>
+    <br><br>
 
-    </div>
+    <a href="/availability/<%= provider._id %>">
+        View Availability
+    </a>
+
+    <hr>
 
 <% }) %>
 

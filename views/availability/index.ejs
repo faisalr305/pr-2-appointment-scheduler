@@ -1,16 +1,37 @@
-<h1>Add Availability</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Availability</title>
+</head>
+<body>
 
-<form action="/availability" method="POST">
+<%- include("../partials/navbar") %>
 
-    <label>Date</label>
-    <input type="date" name="date">
+<h1>Provider Availability</h1>
 
-    <label>Start Time</label>
-    <input type="time" name="startTime">
+<% if (availability.length === 0) { %>
 
-    <label>End Time</label>
-    <input type="time" name="endTime">
+    <p>No availability found.</p>
 
-    <button>Add Availability</button>
+<% } else { %>
 
-</form>
+    <% availability.forEach((slot) => { %>
+
+        <div>
+
+            <h3><%= slot.day %></h3>
+
+            <p>
+                Available Slots:
+                <%= slot.availableSlots.join(", ") %>
+            </p>
+
+        </div>
+
+    <% }) %>
+
+<% } %>
+
+</body>
+</html>
