@@ -2,23 +2,22 @@ const mongoose = require("mongoose");
 
 const appointmentSchema = new mongoose.Schema(
   {
-    user: {
+    customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
     provider: {
-    
       type: String,
       ref: "User",
       required: true,
     },
 
-    title: {
-      type: String,
+    availability: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Availability",
       required: true,
-      trim: true,
     },
 
     service: {
@@ -44,8 +43,14 @@ const appointmentSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["Pending", "Confirmed", "Completed", "Cancelled"],
-      default: "Pending",
+      enum: [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "rescheduled",
+      ],
+      default: "pending",
     },
 
     notes: {
@@ -58,6 +63,9 @@ const appointmentSchema = new mongoose.Schema(
   }
 );
 
-const appointment = mongoose.model("Appointment", appointmentSchema);
+const Appointment = mongoose.model(
+  "Appointment",
+  appointmentSchema
+);
 
-module.exports = appointment;
+module.exports = Appointment;
