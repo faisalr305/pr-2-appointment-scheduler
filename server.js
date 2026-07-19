@@ -53,10 +53,19 @@ app.use(passUserToView)
 
 
 
-app.get('/',(req,res)=>{
-  res.render('homepage.ejs')
-})
+app.get("/", (req, res) => {
 
+    if (!req.session.user) {
+        return res.render("homepage.ejs");
+    }
+
+    if (req.session.user.role === "provider") {
+        return res.render("provider-dashboard.ejs");
+    }
+
+    res.render("customer-dashboard.ejs");
+
+});
 
 // Routes go here
 app.use('/auth',authController)
