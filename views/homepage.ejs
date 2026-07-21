@@ -4,11 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-   
-</head>
-<body>
-    <%- include('./partials/navbar') %>
 
-    <h1>Welcome to my Website</h1>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+        }
+
+        .container{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:90vh;
+        }
+
+        .card{
+            width:420px;
+            background:white;
+            padding:40px;
+            text-align:center;
+            border-radius:10px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            color:#2563eb;
+            margin-bottom:20px;
+        }
+
+        p{
+            color:#555;
+            line-height:1.6;
+            margin-bottom:30px;
+        }
+
+        .btn{
+            display:block;
+            width:100%;
+            padding:12px;
+            margin:10px 0;
+            background:#2563eb;
+            color:white;
+            text-decoration:none;
+            border-radius:5px;
+            font-weight:bold;
+        }
+
+        .btn:hover{
+            background:#1d4ed8;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<%- include('./partials/navbar') %>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Appointment Booking System</h1>
+
+        <p>
+            Book appointments with providers quickly and manage all your bookings in one place.
+        </p>
+
+        <a href="/auth/sign-up" class="btn">Sign Up</a>
+
+        <a href="/auth/sign-in" class="btn">Log In</a>
+
+    </div>
+
+</div>
+
 </body>
 </html>
