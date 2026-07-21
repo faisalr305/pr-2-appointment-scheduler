@@ -6,7 +6,6 @@ const bcrypt = require("bcrypt");
 router.get("/sign-up", (req, res) => {
     res.render("auth/sign-up.ejs");
 });
-
 router.post("/sign-up", async (req, res) => {
 
     const userInDatabase = await User.findOne({

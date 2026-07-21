@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Availability</title>
+    <title>Add Availability</title>
 </head>
 <body>
 
 <%- include("../partials/navbar") %>
 
-<h1>Provider Availability</h1>
+<h1>Add Availability</h1>
 
-<% if (availability.length === 0) { %>
+<form action="/availability" method="POST">
 
-    <p>No availability found.</p>
+<label>Date</label>
+<input type="date" name="date" required>
 
-<% } else { %>
+<br>
 
-    <% availability.forEach((slot) => { %>
 
-        <div>
+<br>
 
-            <h3><%= slot.day %></h3>
+<label>Slots</label>
 
-            <p>
-                Available Slots:
-                <%= slot.availableSlots.join(", ") %>
-            </p>
+<input
+type="text"
+name="slots"
+placeholder="available time slots ">
 
-        </div>
+<br>
+<br>
 
-    <% }) %>
+<button>Add Availability</button>
 
-<% } %>
+</form>
 
 </body>
 </html>

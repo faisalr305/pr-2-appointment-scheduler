@@ -2,77 +2,151 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>New Appointment</title>
+    <title>Book Appointment</title>
 </head>
 
 <body>
 
-    <%- include("../partials/navbar") %>
+<%- include("../partials/navbar") %>
 
-    <h1>Create Appointment</h1>
-
-
-    <form action="/appointments" method="POST">
-
-        <label>Title:</label>
-        <input 
-            type="text" 
-            name="title"
-            required
-        >
-
-        <br>
+<h1>Book Appointment</h1>
 
 
-        <label>Service:</label>
-        <input 
-            type="text" 
-            name="service"
-            required
-        >
-
-        <br>
+<form action="/appointments" method="POST">
 
 
-        <label>Date:</label>
-        <input 
-            type="date" 
-            name="date"
-            required
-        >
+<label>Service</label>
+<br>
 
-        <br>
-        <label>Start Time:</label>
-        <input 
-            type="time" 
-            name="startTime"
-            required
-        >
-
-        <br>
-        <label>End Time:</label>
-        <input 
-            type="time" 
-            name="endTime"
-            required
-        >
-             
-        <br>
-        <label>Notes:</label>
-        <textarea name="notes"></textarea>
-
-        <br>
-<label>Provider:</label>
 <input 
-    type="text"
-    name="provider"
+    type="text" 
+    name="service"
     required
-><br>
+>
 
-        <button type="submit">
-            Create Appointment
-        </button>
-    </form>
+<br><br>
+
+
+
+<label>Select Provider</label>
+<br>
+
+<select name="provider" required>
+
+<option value="">
+Choose Provider
+</option>
+
+
+<% providers.forEach(provider => { %>
+
+<option value="<%= provider._id %>">
+    <%= provider.username %>
+</option>
+
+<% }) %>
+
+
+</select>
+
+
+<br><br>
+
+
+
+<label>Select Date & Time</label>
+
+<br>
+
+
+<% if (!availabilities || availabilities.length === 0) { %>
+
+<p>
+No availability found.
+</p>
+
+
+<% } else { %>
+
+
+<% availabilities.forEach(availability => { %>
+
+
+<h3>
+<%= new Date(availability.date).toDateString() %>
+</h3>
+
+
+
+<% availability.slots.forEach(slot => { %>
+
+
+<% if(slot.status === "available"){ %>
+
+
+<label>
+
+<input 
+type="radio"
+name="selectedSlot"
+value="<%= availability._id %>|<%= slot.time %>"
+required
+>
+
+
+<%= slot.time %>
+
+
+</label>
+
+
+<br>
+
+
+<% } %>
+
+
+<% }) %>
+
+
+<br>
+
+
+<% }) %>
+
+
+<% } %>
+
+
+
+
+<br>
+
+
+<label>
+Notes
+</label>
+
+<br>
+
+
+<textarea
+name="notes"
+rows="4"
+cols="40"
+></textarea>
+
+
+<br><br>
+
+
+
+<button type="submit">
+Book Appointment
+</button>
+
+
+</form>
 
 
 </body>

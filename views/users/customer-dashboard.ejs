@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=h1, initial-scale=1.0">
-    <title>Document</title>
+    <title>Customer Dashboard</title>
 </head>
 <body>
-    <%- include("../partials/navbar") %>
-    <h1>Customer dashboard</h1>
-    <a href="/appointments/new">
-        Create appointments
-    </a>
-    <br>
-    <a href="/appointments">my appointments</a>
-<br>
-<a href="/users/providers">providers</a>
+
+<%- include("../partials/navbar") %>
+
+<h1>Customer Dashboard</h1>
+
+<p>Welcome <%= user.username %></p>
+
+<ul>
+    <li><a href="/users/providers">Browse Providers</a></li>
+    <li><a href="/appointments">My Appointments</a></li>
+    <li><a href="/appointments/new">Book Appointment</a></li>
+</ul>
+
 </body>
 </html>

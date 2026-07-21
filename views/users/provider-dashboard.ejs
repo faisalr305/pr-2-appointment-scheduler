@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Provider Dashboard</title>
 </head>
 <body>
-   <h1>Provider Dashboard</h1>
 
-<a href="/provider/appointments">
-    My Appointments
-</a>
+<%- include("../partials/navbar") %>
 
-<br><br>
+<h1>Provider Dashboard</h1>
 
-<a href="/availability">
-    My Availability
-</a>
+<p>Welcome <%= currentUser.username %></p>
 
-<br><br>
-
-<a href="/availability/new">
-    Add Availability
-</a>
+<ul>
+    <li><a href="/users/my-appointments">My Appointments</a></li>
+    <li><a href="/availability">My Availability</a></li>
+    <li><a href="/availability/new">Add Availability</a></li>
+</ul>
 
 </body>
 </html>

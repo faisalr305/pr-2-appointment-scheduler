@@ -24,7 +24,6 @@ const availabilitySchema = new mongoose.Schema(
         "Saturday",
         "Sunday",
       ],
-      required: true,
     },
 
     slots: [
@@ -48,7 +47,9 @@ const availabilitySchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 availabilitySchema.index(
@@ -56,22 +57,14 @@ availabilitySchema.index(
   { unique: true }
 );
 
-
-
-availabilitySchema.pre("validate", function (next) {
+availabilitySchema.pre("validate", function () {
   if (this.date) {
-    this.day = this.date.toLocaleDateString("en-US", {
+    this.day = new Date(this.date).toLocaleDateString("en-US", {
       weekday: "long",
     });
   }
-
-  next();
 });
 
-
-const Availability = mongoose.model(
-  "Availability",
-  availabilitySchema
-);
-
-module.exports = Availability;
+module.exports =
+  mongoose.models.Availability ||
+  mongoose.model("Availability", availabilitySchema);

@@ -4,12 +4,13 @@ const User = require("../models/user.js");
 const router = require("express").Router();
 
 const isSignedIn = require("../middleware/is-signed-in.js");
+const Availability = require("../models/Availability");
 
 
 router.get("/", isSignedIn, async (req, res) => {
 
     const allAppointments = await Appointment.find({
-        user: req.session.user._id
+        customer: req.session.user._id
     });
 
     res.render("appointments/all-appointments.ejs", {
@@ -25,32 +26,50 @@ router.get("/new", isSignedIn, async (req, res) => {
         role: "provider"
     });
 
+    const availabilities = await Availability.find({
+        "slots.status": "available"
+    }).populate("provider");
+
     res.render("appointments/new.ejs", {
-        providers
+        providers,
+        availabilities
     });
 
 });
 
-
-
 router.post("/", isSignedIn, async (req, res) => {
 
-    await Appointment.create({
-        title: req.body.title,
-        service: req.body.service,
-        date: req.body.date,
-        startTime: req.body.startTime,
-        endTime: req.body.endTime,
-        notes: req.body.notes,
-        user: req.session.user._id,
-        provider: req.body.provider
-    });
+    const [availabilityId, time] =
+        req.body.selectedSlot.split("|");
+
+    const availability =
+        await Availability.findById(availabilityId);
+
+    const appointment =
+        await Appointment.create({
+
+            customer: req.session.user._id,
+            provider: req.body.provider,
+            availability: availabilityId,
+            service: req.body.service,
+            date: availability.date,
+            startTime: time,
+            endTime: time,
+            notes: req.body.notes
+        });
+
+    const slot = availability.slots.find(
+        s => s.time === time
+    );
+
+    slot.status = "booked";
+    slot.appointment = appointment._id;
+
+    await availability.save();
 
     res.redirect("/appointments");
 
 });
-
-
 router.get("/:appointmentId/edit", isSignedIn, async (req, res) => {
 
     const appointment = await Appointment.findById(
@@ -84,8 +103,6 @@ router.delete("/:appointmentId", isSignedIn, async (req, res) => {
     res.redirect("/appointments");
 
 });
-
-
 
 router.get("/:appointmentId", isSignedIn, async (req, res) => {
 
