@@ -1,153 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Book Appointment</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Appointment</title>
 
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:450px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.slot{
+    background:#eef4ff;
+    padding:8px;
+    border-radius:5px;
+    margin:8px 0;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+</style>
+
+</head>
 <body>
 
 <%- include("../partials/navbar") %>
 
-<h1>Book Appointment</h1>
+<div class="container">
 
+<h1>Book Appointment</h1>
 
 <form action="/appointments" method="POST">
 
-
 <label>Service</label>
-<br>
+<input type="text" name="service" required>
 
-<input 
-    type="text" 
-    name="service"
-    required
->
-
-<br><br>
-
-
-
-<label>Select Provider</label>
-<br>
-
+<label>Provider</label>
 <select name="provider" required>
 
-<option value="">
-Choose Provider
-</option>
+<option value="">Choose Provider</option>
 
-
-<% providers.forEach(provider => { %>
+<% providers.forEach(provider=>{ %>
 
 <option value="<%= provider._id %>">
-    <%= provider.username %>
+<%= provider.username %>
 </option>
 
 <% }) %>
-
 
 </select>
 
+<label>Available Time</label>
 
-<br><br>
+<% if(!availabilities || availabilities.length===0){ %>
 
+<p>No availability found.</p>
 
+<% }else{ %>
 
-<label>Select Date & Time</label>
+<% availabilities.forEach(availability=>{ %>
 
-<br>
+<p><strong><%= new Date(availability.date).toDateString() %></strong></p>
 
+<% availability.slots.forEach(slot=>{ %>
 
-<% if (!availabilities || availabilities.length === 0) { %>
+<% if(slot.status==="available"){ %>
 
-<p>
-No availability found.
-</p>
-
-
-<% } else { %>
-
-
-<% availabilities.forEach(availability => { %>
-
-
-<h3>
-<%= new Date(availability.date).toDateString() %>
-</h3>
-
-
-
-<% availability.slots.forEach(slot => { %>
-
-
-<% if(slot.status === "available"){ %>
-
+<div class="slot">
 
 <label>
 
-<input 
+<input
 type="radio"
 name="selectedSlot"
 value="<%= availability._id %>|<%= slot.time %>"
-required
->
-
+required>
 
 <%= slot.time %>
 
-
 </label>
 
-
-<br>
-
+</div>
 
 <% } %>
 
-
 <% }) %>
 
-
-<br>
-
-
 <% }) %>
-
 
 <% } %>
 
+<label>Notes</label>
 
+<textarea name="notes" rows="4"></textarea>
 
-
-<br>
-
-
-<label>
-Notes
-</label>
-
-<br>
-
-
-<textarea
-name="notes"
-rows="4"
-cols="40"
-></textarea>
-
-
-<br><br>
-
-
-
-<button type="submit">
-Book Appointment
-</button>
-
+<button type="submit">Book Appointment</button>
 
 </form>
 
+</div>
 
 </body>
 </html>
