@@ -1,18 +1,28 @@
 <nav>
-    
-    <a href="/">Homepage</a>
-    <% if (user){ %>
-    <a href="/auth/sign-out">Logout</a>
-    <a href="/appointments/new">Create Appointments</a>
-     <a href="/appointments">My Appointments</a> 
-     <a href="/users/Providers">Provider</a> 
-     
-
-    <% } else{ %>
-    <a href="/auth/sign-up">Sign up</a>
-    <a href="/auth/sign-in">Login</a>
-   
-
-    <% } %>
-    
+    <a href="/">Home</a>
+    <a href="/appointments">Appointments</a>
+    <a href="/appointments/new">Book</a>
+    <a href="/users/providers">Providers</a>
+    <a href="/availability">Availability</a>
+    <a href="/auth/sign-in">Sign In</a>
+    <a href="/auth/sign-up">Sign Up</a>
 </nav>
+
+<style>
+nav{
+    background:#2563eb;
+    padding:15px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    font-weight:bold;
+}
+
+nav a:hover{
+    text-decoration:underline;
+}
+</style>
