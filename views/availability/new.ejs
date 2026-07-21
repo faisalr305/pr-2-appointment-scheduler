@@ -1,11 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Availability</title>
+<meta charset="UTF-8">
+<title>Add Availability</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:400px;
+    margin:50px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+</style>
+
 </head>
+
 <body>
 
 <%- include("../partials/navbar") %>
+
+<div class="container">
 
 <h1>Add Availability</h1>
 
@@ -13,30 +64,23 @@
 
 <label>Date</label>
 
-<input
-type="date"
-name="date"
-required>
-
-<br><br>
+<input type="date" name="date" required>
 
 <label>Available Time Slots</label>
 
 <input
 type="text"
 name="slots"
-placeholder="09:00,10:00,11:00,14:00"
+placeholder="09:00,10:00,11:00"
 required>
 
-<br><br>
-
 <button type="submit">
-
 Save Availability
-
 </button>
 
 </form>
+
+</div>
 
 </body>
 </html>
