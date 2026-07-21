@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Appointment Details</title>
+<meta charset="UTF-8">
+<title>Appointment Details</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+.card{
+    width:500px;
+    margin:40px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+h1{
+    color:#2563eb;
+}
+
+a,button{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 15px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:5px;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+button{
+    background:#dc2626;
+}
+</style>
+
 </head>
+
 <body>
-    <%- include("../partials/navbar") %>
-    <h1>Appointment Details</h1>
-    <h2>
-        <%= appointment.title %>
-    </h2>
-    <p>
-        Service:
-        <%= appointment.service %>
-    </p>
-    <p>
-        Date:
-        <%= appointment.date %>
-    </p>
 
-    <p>
-        Time:
-        <%= appointment.startTime %>
-        -
-        <%= appointment.endTime %>
-    </p>
-    <p>
-        Notes:
-        <%= appointment.notes %>
-    </p>
-    <p>
-        provider:
-         <%= appointment.provider %>
+<%- include("../partials/navbar") %>
 
-    </p>
-    <a href="/appointments/<%= appointment._id %>/edit">
-    Edit Appointment
-</a>
+<div class="card">
 
-<br><br>
+<h1><%= appointment.title %></h1>
+
+<p><strong>Service:</strong> <%= appointment.service %></p>
+
+<p><strong>Date:</strong> <%= appointment.date %></p>
+
+<p><strong>Time:</strong> <%= appointment.startTime %> - <%= appointment.endTime %></p>
+
+<p><strong>Provider:</strong> <%= appointment.provider %></p>
+
+<p><strong>Notes:</strong> <%= appointment.notes %></p>
+
+<a href="/appointments/<%= appointment._id %>/edit">Edit</a>
 
 <form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST">
-
-    <button type="submit">
-        Delete Appointment
-    </button>
-
+<button>Delete</button>
 </form>
 
-    <a href="/appointments">
-        Back to Appointments
-    </a>
+</div>
+
 </body>
 </html>
