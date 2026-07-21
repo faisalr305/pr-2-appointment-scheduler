@@ -1,21 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Customer Dashboard</title>
+<meta charset="UTF-8">
+<title>Customer Dashboard</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:70%;
+    margin:40px auto;
+}
+
+h1{
+    color:#2563eb;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.menu{
+    margin-top:20px;
+}
+
+.menu a{
+    display:block;
+    text-decoration:none;
+    background:#2563eb;
+    color:white;
+    padding:12px;
+    margin:10px 0;
+    border-radius:5px;
+    text-align:center;
+}
+
+.menu a:hover{
+    background:#1d4ed8;
+}
+</style>
+
 </head>
+
 <body>
 
 <%- include("../partials/navbar") %>
 
+<div class="container">
+
+<div class="card">
+
 <h1>Customer Dashboard</h1>
 
-<p>Welcome <%= user.username %></p>
+<p>Welcome, <strong><%= user.username %></strong></p>
 
-<ul>
-    <li><a href="/users/providers">Browse Providers</a></li>
-    <li><a href="/appointments">My Appointments</a></li>
-    <li><a href="/appointments/new">Book Appointment</a></li>
-</ul>
+<div class="menu">
+
+<a href="/users/providers">Browse Providers</a>
+
+<a href="/appointments">My Appointments</a>
+
+<a href="/appointments/new">Book Appointment</a>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>
