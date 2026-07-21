@@ -1,54 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Appointments</title>
+<meta charset="UTF-8">
+<title>My Appointments</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+}
+
+.container{
+    width:80%;
+    margin:40px auto;
+}
+
+h1{
+    color:#2563eb;
+}
+
+.btn{
+    display:inline-block;
+    background:#2563eb;
+    color:white;
+    padding:10px 15px;
+    text-decoration:none;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.card a{
+    color:#2563eb;
+    text-decoration:none;
+}
+</style>
+
 </head>
 
 <body>
 
-    <%- include("../partials/navbar") %>
+<%- include("../partials/navbar") %>
 
-        <h1>My Appointments</h1>
+<div class="container">
 
-        <a href="/appointments/new">
-            Create New Appointment
-        </a>
-        <% appointments.forEach((appointment)=> { %>
+<h1>My Appointments</h1>
 
-            <div>
+<a href="/appointments/new" class="btn">Book Appointment</a>
 
-                <h2>
-                    <%= appointment.title %>
-                </h2>
+<% appointments.forEach(appointment=>{ %>
 
-                <p>
-                    Service:
-            <%= appointment.service %>
-                </p>
+<div class="card">
 
-                <p>
-                    Date:
-                    <%= appointment.date %>
-                </p>
+<h3><%= appointment.title %></h3>
 
-                <p>
-                    Time:
-                    <%= appointment.startTime %>
-                        -
-                        <%= appointment.endTime %>
-                </p>
+<p><strong>Service:</strong> <%= appointment.service %></p>
 
-                <a href="/appointments/<%= appointment._id %>">
-                    View
-                </a>
+<p><strong>Date:</strong> <%= appointment.date %></p>
 
-            </div>
+<p><strong>Time:</strong> <%= appointment.startTime %> - <%= appointment.endTime %></p>
 
-            <% }) %>
+<a href="/appointments/<%= appointment._id %>">View Details</a>
 
+</div>
+
+<% }) %>
+
+</div>
 
 </body>
-
 </html>
