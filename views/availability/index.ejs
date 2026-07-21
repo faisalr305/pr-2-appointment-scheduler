@@ -1,38 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Availability</title>
+<meta charset="UTF-8">
+<title>My Availability</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:80%;
+    margin:40px auto;
+}
+
+h1{
+    color:#2563eb;
+}
+
+.btn{
+    display:inline-block;
+    padding:10px 18px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:15px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.slot{
+    display:inline-block;
+    background:#e8f0ff;
+    color:#2563eb;
+    padding:6px 12px;
+    border-radius:5px;
+    margin:5px;
+}
+</style>
+
 </head>
+
 <body>
 
 <%- include("../partials/navbar") %>
 
-<h1>Add Availability</h1>
+<div class="container">
 
-<form action="/availability" method="POST">
+<h1>My Availability</h1>
 
-<label>Date</label>
-<input type="date" name="date" required>
+<a href="/availability/new" class="btn">Add Availability</a>
 
-<br>
+<% availability.forEach(day=>{ %>
 
+<div class="card">
 
-<br>
+<h3><%= new Date(day.date).toDateString() %></h3>
 
-<label>Slots</label>
+<% day.slots.forEach(slot=>{ %>
 
-<input
-type="text"
-name="slots"
-placeholder="available time slots ">
+<span class="slot">
+<%= slot.time %>
+</span>
 
-<br>
-<br>
+<% }) %>
 
-<button>Add Availability</button>
+</div>
 
+<% }) %>
 
-</form>
+</div>
 
 </body>
 </html>
