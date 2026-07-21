@@ -1,134 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Provider Dashboard</title>
+<meta charset="UTF-8">
+<title>Provider Dashboard</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:85%;
+    margin:40px auto;
+}
+
+h1{
+    color:#2563eb;
+}
+
+.btn{
+    display:inline-block;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    border-radius:5px;
+    margin:5px;
+    cursor:pointer;
+}
+
+input{
+    padding:8px;
+    margin:5px;
+}
+</style>
+
 </head>
 
 <body>
 
-    <%- include("../partials/navbar") %>
+<%- include("../partials/navbar") %>
 
-    <h1>Provider My Appointments</h1>
+<div class="container">
 
-    <a href="/availability">
-        Manage Availability
-    </a>
+<h1>Provider Dashboard</h1>
 
-    <br><br>
+<a href="/availability" class="btn">Manage Availability</a>
 
-    <% if (appointments.length === 0) { %>
+<% if(appointments.length===0){ %>
 
-        <p>No appointments yet.</p>
+<p>No appointments available.</p>
 
-    <% } %>
+<% } %>
 
+<% appointments.forEach(appointment=>{ %>
 
-    <% appointments.forEach((appointment) => { %>
+<div class="card">
 
-        <div>
+<h3><%= appointment.service %></h3>
 
-            <h2>
-                <%= appointment.service %>
-            </h2>
+<p><strong>Customer:</strong> <%= appointment.customer.username %></p>
 
-            <p>
-                Customer:
-                <%= appointment.customer.username %>
-            </p>
+<p><strong>Date:</strong> <%= new Date(appointment.date).toDateString() %></p>
 
-            <p>
-                Date:
-                <%= new Date(appointment.date).toDateString() %>
-            </p>
+<p><strong>Time:</strong> <%= appointment.startTime %> - <%= appointment.endTime %></p>
 
-            <p>
-                Time:
-                <%= appointment.startTime %>
-                -
-                <%= appointment.endTime %>
-            </p>
+<p><strong>Status:</strong> <%= appointment.status %></p>
 
-            <p>
-                Status:
-                <%= appointment.status %>
-            </p>
+<form action="/appointments/<%= appointment._id %>/accept?_method=PUT" method="POST">
+<button>Confirm</button>
+</form>
 
+<form action="/appointments/<%= appointment._id %>/cancel?_method=PUT" method="POST">
+<button>Cancel</button>
+</form>
 
-            <form
-                action="/appointments/<%= appointment._id %>/accept?_method=PUT"
-                method="POST"
-            >
+<form action="/appointments/<%= appointment._id %>/complete?_method=PUT" method="POST">
+<button>Complete</button>
+</form>
 
-                <button type="submit">
-                    Confirm
-                </button>
+<h4>Reschedule</h4>
 
-            </form>
+<form action="/appointments/<%= appointment._id %>/reschedule?_method=PUT" method="POST">
 
+<input type="date" name="date" required>
 
-            <form
-                action="/appointments/<%= appointment._id %>/cancel?_method=PUT"
-                method="POST"
-            >
+<input type="time" name="startTime" required>
 
-                <button type="submit">
-                    Cancel
-                </button>
+<input type="time" name="endTime" required>
 
-            </form>
+<button>Save</button>
 
+</form>
 
-            <h3>Reschedule</h3>
+</div>
 
-            <form
-                action="/appointments/<%= appointment._id %>/reschedule?_method=PUT"
-                method="POST"
-            >
+<% }) %>
 
-                <input
-                    type="date"
-                    name="date"
-                    required
-                >
-
-                <input
-                    type="time"
-                    name="startTime"
-                    required
-                >
-
-                <input
-                    type="time"
-                    name="endTime"
-                    required
-                >
-
-                <button type="submit">
-                    Reschedule
-                </button>
-
-            </form>
-
-
-            <form
-                action="/appointments/<%= appointment._id %>/complete?_method=PUT"
-                method="POST"
-            >
-
-                <button type="submit">
-                    Complete
-                </button>
-
-            </form>
-
-            <hr>
-
-        </div>
-
-    <% }) %>
+</div>
 
 </body>
-
 </html>
