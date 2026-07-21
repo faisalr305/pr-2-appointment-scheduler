@@ -8,6 +8,16 @@ const availabilitySchema = new mongoose.Schema(
       required: true,
     },
 
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    availability: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Availability",
+      default: null,
+    },
     date: {
       type: Date,
       required: true,

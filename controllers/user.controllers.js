@@ -33,9 +33,10 @@ router.get("/providers/:provider", async (req, res) => {
 router.get("/my-appointments", async (req, res) => {
 const provider = req.session.user.username;
     const appointments = await Appointment.find({
-        provider: req.session.user.username
+        provider: req.session.user._id
     });
 
+    console.log(appointments);
     res.render("users/provider-appointments.ejs", {
         appointments,provider
     });

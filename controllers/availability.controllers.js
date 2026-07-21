@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const Availability = require("../models/Availability.js");
 const isSignedIn = require("../middleware/is-signed-in");
+const requireRole = require("../middleware/require-role.js");
 
 
 
-router.get("/", isSignedIn, async (req, res) => {
+router.get("/", isSignedIn,requireRole("provider"), async (req, res) => {
 
     const availability = await Availability.find({
         provider: req.session.user._id
@@ -18,7 +19,7 @@ router.get("/", isSignedIn, async (req, res) => {
 
 
 
-router.get("/new", isSignedIn, (req, res) => {
+router.get("/new", isSignedIn,requireRole("provider"), (req, res) => {
 
     res.render("availability/new.ejs",{provider, availabilities});
 
@@ -26,7 +27,7 @@ router.get("/new", isSignedIn, (req, res) => {
 
 
 
-router.post("/", isSignedIn, async (req, res) => {
+router.post("/", isSignedIn,requireRole("provider"), async (req, res) => {
 
     try {
 
@@ -89,5 +90,23 @@ router.get("/:providerId", isSignedIn, async (req, res) => {
     });
 
 });
+router.get("/provider/:providerId",isSignedIn,requireRole("customer"),async (req, res) => {
+        const provider = await User.findOne({
+            _id: req.params.providerId,
+            role: "provider"
+        });
 
+        const availability = await Availability.find({
+            provider: provider._id
+        });
+
+        res.render(
+            "availability/provider-availability.ejs",
+            {
+                provider,
+                availability
+            }
+        );
+    }
+);
 module.exports = router;

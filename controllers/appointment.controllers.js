@@ -1,9 +1,11 @@
 const Appointment = require("../models/appointments.js");
 const User = require("../models/user.js");
+const  availability = require("../models/Availability.js");
 
 const router = require("express").Router();
 
 const isSignedIn = require("../middleware/is-signed-in.js");
+const requireRole = require("../middleware/require-role.js");
 const Availability = require("../models/Availability");
 
 

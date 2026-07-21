@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>
+        <%= provider.username %> Availability
+    </title>
+</head>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+
+    <h1>
+        <%= provider.username %>'s Availability
+    </h1>
+
+    <% availability.forEach(day => { %>
+
+        <h2>
+            <%= day.date.toDateString() %>
+        </h2>
+
+        <% day.slots.forEach(slot => { %>
+
+            <% if (slot.status === "available") { %>
+
+                <p>
+                    <%= slot.time %>
+
+                    <a href="/appointments/new">
+                        Book
+                    </a>
+                </p>
+
+            <% } %>
+
+        <% }) %>
+
+    <% }) %>
+
+</body>
+
+</html>
