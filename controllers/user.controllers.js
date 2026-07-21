@@ -25,23 +25,7 @@ router.get(
 );
 
 
-router.get(
-    "/my-appointments",
-    isSignedIn,
-    requireRole("provider"),
-    async (req, res) => {
 
-        const appointments = await Appointment.find({
-            provider: req.session.user._id
-        }).populate("customer");
-
-        res.render("users/provider-appointments.ejs", {
-            appointments,
-            provider: req.session.user.username
-        });
-
-    }
-);
 
 
 module.exports = router;

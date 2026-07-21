@@ -44,15 +44,6 @@ app.use(
 app.use(passUserToView)
 
 
-
-
-
-
-
-
-
-
-
 app.get("/", (req, res) => {
 
     if (!req.session.user) {
@@ -60,7 +51,7 @@ app.get("/", (req, res) => {
     }
 
     if (req.session.user.role === "provider") {
-        return res.redirect("/users/my-appointments");
+        return res.redirect("/appointments/provider-dashboard");
     }
 
     res.render("users/customer-dashboard.ejs");
