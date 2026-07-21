@@ -14,13 +14,8 @@
 
     <h2><%= provider.username %></h2>
 
-    <a href="/users/providers/<%= provider.username %>">
-        View Appointments
-    </a>
-
-    <br><br>
-
-    <a href="/availability/<%= provider._id %>">
+    <!-- Customer can view this provider's availability -->
+    <a href="/availability/provider/<%= provider._id %>">
         View Availability
     </a>
 

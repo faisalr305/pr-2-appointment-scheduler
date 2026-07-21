@@ -1,0 +1,41 @@
+<h1>Provider Dashboard</h1>
+
+<% appointments.forEach(appointment => { %>
+
+<div class="card p-3 mb-3">
+
+    <h3><%= appointment.customer.name %></h3>
+
+    <p>Service: <%= appointment.service %></p>
+
+    <p>Date: <%= new Date(appointment.date).toDateString() %></p>
+
+    <p>Time: <%= appointment.startTime %></p>
+
+    <p>Status: <%= appointment.status %></p>
+
+    <form action="/appointments/<%= appointment._id %>/accept?_method=PUT" method="POST">
+        <button class="btn btn-success">Accept</button>
+    </form>
+
+    <br>
+
+    <form action="/appointments/<%= appointment._id %>/cancel?_method=PUT" method="POST">
+        <button class="btn btn-warning">Cancel</button>
+    </form>
+
+    <br>
+
+    <form action="/appointments/<%= appointment._id %>/complete?_method=PUT" method="POST">
+        <button class="btn btn-primary">Complete</button>
+    </form>
+
+    <br>
+
+    <form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+
+</div>
+
+<% }) %>

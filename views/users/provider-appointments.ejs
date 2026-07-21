@@ -1,42 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <title>Provider Appointments</title>
 </head>
+
 <body>
 
-<%- include("../partials/navbar") %>
+    <%- include("../partials/navbar") %>
 
-<h1>My Appointments</h1>
+    <h1>My Appointments</h1>
 
-<% if (appointments.length === 0) { %>
+    <% appointments.forEach((appointment) => { %>
 
-<p>No appointments.</p>
+        <div>
 
-<% } %>
+            <h2>
+                <%= appointment.service %>
+            </h2>
 
-<% appointments.forEach(appointment => { %>
+            <p>
+                Customer:
+                <%= appointment.customer.username %>
+            </p>
 
-<div>
+            <p>
+                Date:
+                <%= appointment.date.toDateString() %>
+            </p>
 
-<h3><%= appointment.service %></h3>
+            <p>
+                Time:
+                <%= appointment.startTime %>
+                -
+                <%= appointment.endTime %>
+            </p>
 
-<p>Date: <%= appointment.date.toDateString() %></p>
+            <p>
+                Status:
+                <%= appointment.status %>
+            </p>
 
-<p>Time:
-<%= appointment.startTime %> -
-<%= appointment.endTime %>
-</p>
 
-<p>Status:
-<%= appointment.status %>
-</p>
+            <% if (appointment.status === "Pending") { %>
 
-</div>
+                <form
+                    action="/appointments/<%= appointment._id %>/confirm"
+                    method="POST"
+                >
 
-<hr>
+                    <button type="submit">
+                        Confirm
+                    </button>
 
-<% }) %>
+                </form>
+
+
+                <form
+                    action="/appointments/<%= appointment._id %>/cancel"
+                    method="POST"
+                >
+
+                    <button type="submit">
+                        Cancel
+                    </button>
+
+                </form>
+
+            <% } %>
+
+
+            <% if (
+                appointment.status === "Pending" ||
+                appointment.status === "Confirmed"
+            ) { %>
+
+                <a href="/appointments/<%= appointment._id %>/reschedule">
+
+                    Reschedule
+
+                </a>
+
+            <% } %>
+
+
+            <form
+                action="/appointments/<%= appointment._id %>/delete"
+                method="POST"
+            >
+
+                <button type="submit">
+                    Delete
+                </button>
+
+            </form>
+
+            <hr>
+
+        </div>
+
+    <% }) %>
 
 </body>
+
 </html>

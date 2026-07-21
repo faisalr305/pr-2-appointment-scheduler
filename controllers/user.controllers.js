@@ -1,46 +1,47 @@
 const router = require("express").Router();
 
-const User = require("../models/user");
-const Appointment = require("../models/appointments");
+const User = require("../models/User.js");
+const Appointment = require("../models/appointments.js");
+
+const isSignedIn = require("../middleware/is-signed-in.js");
+const requireRole = require("../middleware/require-role.js");
 
 
-router.get("/providers", async (req, res) => {
+router.get(
+    "/providers",
+    isSignedIn,
+    requireRole("customer"),
+    async (req, res) => {
 
-    const providers = await User.find({
-        role: "provider"
-    });
+        const providers = await User.find({
+            role: "provider"
+        });
 
-    res.render("users/providers.ejs", {
-        providers
-    });
+        res.render("users/providers.ejs", {
+            providers
+        });
 
-});
-
-router.get("/providers/:provider", async (req, res) => {
-
-    const appointments = await Appointment.find({
-        provider: req.params.provider
-    });
-
-    res.render("users/provider-appointments.ejs", {
-        provider: req.params.provider,
-        appointments
-    });
-
-});
+    }
+);
 
 
-router.get("/my-appointments", async (req, res) => {
-const provider = req.session.user.username;
-    const appointments = await Appointment.find({
-        provider: req.session.user._id
-    });
+router.get(
+    "/my-appointments",
+    isSignedIn,
+    requireRole("provider"),
+    async (req, res) => {
 
-    console.log(appointments);
-    res.render("users/provider-appointments.ejs", {
-        appointments,provider
-    });
+        const appointments = await Appointment.find({
+            provider: req.session.user._id
+        }).populate("customer");
 
-});
+        res.render("users/provider-appointments.ejs", {
+            appointments,
+            provider: req.session.user.username
+        });
+
+    }
+);
+
 
 module.exports = router;

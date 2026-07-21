@@ -1,21 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <title>Provider Dashboard</title>
 </head>
+
 <body>
 
-<%- include("../partials/navbar") %>
+    <%- include("../partials/navbar") %>
 
-<h1>Provider Dashboard</h1>
+    <h1>Provider My Appointments</h1>
 
-<p>Welcome <%= currentUser.username %></p>
+    <a href="/availability">
+        Manage Availability
+    </a>
 
-<ul>
-    <li><a href="/users/my-appointments">My Appointments</a></li>
-    <li><a href="/availability">My Availability</a></li>
-    <li><a href="/availability/new">Add Availability</a></li>
-</ul>
+    <br><br>
+
+    <% if (appointments.length === 0) { %>
+
+        <p>No appointments yet.</p>
+
+    <% } %>
+
+
+    <% appointments.forEach((appointment) => { %>
+
+        <div>
+
+            <h2>
+                <%= appointment.service %>
+            </h2>
+
+            <p>
+                Customer:
+                <%= appointment.customer.username %>
+            </p>
+
+            <p>
+                Date:
+                <%= new Date(appointment.date).toDateString() %>
+            </p>
+
+            <p>
+                Time:
+                <%= appointment.startTime %>
+                -
+                <%= appointment.endTime %>
+            </p>
+
+            <p>
+                Status:
+                <%= appointment.status %>
+            </p>
+
+
+            <form
+                action="/appointments/<%= appointment._id %>/accept?_method=PUT"
+                method="POST"
+            >
+
+                <button type="submit">
+                    Confirm
+                </button>
+
+            </form>
+
+
+            <form
+                action="/appointments/<%= appointment._id %>/cancel?_method=PUT"
+                method="POST"
+            >
+
+                <button type="submit">
+                    Cancel
+                </button>
+
+            </form>
+
+
+            <h3>Reschedule</h3>
+
+            <form
+                action="/appointments/<%= appointment._id %>/reschedule?_method=PUT"
+                method="POST"
+            >
+
+                <input
+                    type="date"
+                    name="date"
+                    required
+                >
+
+                <input
+                    type="time"
+                    name="startTime"
+                    required
+                >
+
+                <input
+                    type="time"
+                    name="endTime"
+                    required
+                >
+
+                <button type="submit">
+                    Reschedule
+                </button>
+
+            </form>
+
+
+            <form
+                action="/appointments/<%= appointment._id %>/complete?_method=PUT"
+                method="POST"
+            >
+
+                <button type="submit">
+                    Complete
+                </button>
+
+            </form>
+
+            <hr>
+
+        </div>
+
+    <% }) %>
 
 </body>
+
 </html>
