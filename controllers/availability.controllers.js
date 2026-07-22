@@ -6,12 +6,8 @@ const User = require("../models/User.js");
 const isSignedIn = require("../middleware/is-signed-in.js");
 const requireRole = require("../middleware/require-role.js");
 
-router.get(
-    "/",
-    isSignedIn,
-    requireRole("provider"),
+router.get("/",isSignedIn,requireRole("provider"),
     async (req, res) => {
-
         const availability = await Availability.find({
             provider: req.session.user._id
         });
@@ -19,28 +15,19 @@ router.get(
         res.render("availability/index.ejs", {
             availability
         });
-
     }
 );
 
-router.get(
-    "/new",
-    isSignedIn,
-    requireRole("provider"),
+router.get("/new",isSignedIn,requireRole("provider"),
     (req, res) => {
 
         res.render("availability/new.ejs");
-
     }
 );
 
 
-router.post(
-    "/",
-    isSignedIn,
-    requireRole("provider"),
+router.post("/",isSignedIn,requireRole("provider"),
     async (req, res) => {
-
         try {
 
             const slots = req.body.slots
@@ -51,7 +38,6 @@ router.post(
                 }));
 
             const selectedDate = new Date(req.body.date);
-
             let availability = await Availability.findOne({
                 provider: req.session.user._id,
                 date: selectedDate
@@ -70,7 +56,6 @@ router.post(
                     date: selectedDate,
                     slots
                 });
-
             }
 
             res.redirect("/availability");
@@ -82,16 +67,10 @@ router.post(
             res.status(500).send(error.message);
 
         }
-
     }
 );
 
-
-
-router.get(
-    "/provider/:providerId",
-    isSignedIn,
-    requireRole("customer"),
+router.get( "/provider/:providerId",isSignedIn,requireRole("customer"),
     async (req, res) => {
 
         const provider = await User.findOne({

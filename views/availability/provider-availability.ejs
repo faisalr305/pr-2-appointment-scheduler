@@ -1,46 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= provider.username %> Availability</title>
 
-    <title>
-        <%= provider.username %> Availability
-    </title>
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6f9;
+}
+
+.container{
+    width:80%;
+    max-width:800px;
+    margin:40px auto;
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.card h2{
+    color:#333;
+    margin-bottom:15px;
+}
+
+.slot{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#eef4ff;
+    padding:10px 15px;
+    border-radius:6px;
+    margin:10px 0;
+}
+
+.btn{
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    padding:8px 15px;
+    border-radius:5px;
+}
+
+.btn:hover{
+    background:#1d4ed8;
+}
+</style>
+
 </head>
 
 <body>
 
-    <%- include("../partials/navbar") %>
+<%- include("../partials/navbar") %>
 
-    <h1>
-        <%= provider.username %>'s Availability
-    </h1>
+<div class="container">
 
-    <% availability.forEach(day => { %>
+<h1><%= provider.username %>'s Availability</h1>
 
-        <h2>
-            <%= day.date.toDateString() %>
-        </h2>
+<% availability.forEach(day => { %>
 
-        <% day.slots.forEach(slot => { %>
+<div class="card">
 
-            <% if (slot.status === "available") { %>
+<h2><%= day.date.toDateString() %></h2>
 
-                <p>
-                    <%= slot.time %>
+<% day.slots.forEach(slot => { %>
 
-                    <a href="/appointments/new">
-                        Book
-                    </a>
-                </p>
+<% if(slot.status === "available"){ %>
 
-            <% } %>
+<div class="slot">
 
-        <% }) %>
+<span><%= slot.time %></span>
 
-    <% }) %>
+<a href="/appointments/new" class="btn">
+Book
+</a>
+
+</div>
+
+<% } %>
+
+<% }) %>
+
+</div>
+
+<% }) %>
+
+</div>
 
 </body>
-
 </html>

@@ -293,4 +293,22 @@ router.get("/:appointmentId", isSignedIn, async (req, res) => {
     }
 });
 
+
+router.post("/search", isSignedIn, async (req, res) => {
+    try {
+        const availabilitiesForProvider = await Availability.find({
+            provider: req.body.provider
+        });
+        const providers = await User.find({ role: "provider" });
+
+        res.render("appointments/new.ejs", {
+            providers,
+            availabilities: availabilitiesForProvider
+        });
+    } catch (error) {
+        console.log(error);
+        res.send(error)
+    }
+})
+
 module.exports = router;

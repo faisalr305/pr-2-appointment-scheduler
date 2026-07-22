@@ -75,14 +75,10 @@ button:hover{
 
 <h1>Book Appointment</h1>
 
-<form action="/appointments" method="POST">
+<form action="/appointments/search" method="POST">
 
-<label>Service</label>
-<input type="text" name="service" required>
-
-<label>Provider</label>
+<label>Pick provider:</label>
 <select name="provider" required>
-
 <option value="">Choose Provider</option>
 
 <% providers.forEach(provider=>{ %>
@@ -94,6 +90,14 @@ button:hover{
 <% }) %>
 
 </select>
+<button type="submit">Pick provider</button>
+
+</form>
+<form action="/appointments" method="POST">
+
+<label>Service</label>
+<input type="text" name="service" required>
+
 
 <label>Available Time</label>
 
