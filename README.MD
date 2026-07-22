@@ -7,6 +7,18 @@ Appointment Scheduler is a full-stack web application that allows users to book,
 
 ## Screenshots
 
+![CUSTOMER DASHBOARD](![alt text](<Screenshot 2026-07-22 104426.png>))
+
+
+![BOOKING PAGE](![alt text](<Screenshot 2026-07-22 104547.png>))
+
+![PROVIDER DASHBOARD](![alt text](<Screenshot 2026-07-22 104725.png>))
+
+
+
+
+
+
 
 ## Technologies Used
 
@@ -176,4 +188,8 @@ As a user I can:
 ---
 
 ## Credits
+
+- MR OMAR
+- ZAID
+- ISRAA
 
