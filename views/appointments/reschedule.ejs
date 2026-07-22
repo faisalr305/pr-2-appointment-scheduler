@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reschedule Appointment</title>
+</head>
+
+<body>
+
+<%- include("../partials/navbar") %>
+
+<h1>Reschedule Appointment</h1>
+
+<form
+    action="/appointments/<%= appointment._id %>/reschedule"
+    method="POST"
+>
+
+    <label>
+        Select New Date and Time
+    </label>
+
+    <br><br>
+
+
+    <% availabilities.forEach(availability => { %>
+
+        <h3>
+            <%= new Date(availability.date).toDateString() %>
+        </h3>
+
+
+        <% availability.slots.forEach(slot => { %>
+
+            <% if (slot.status === "available") { %>
+
+                <label>
+
+                    <input
+                        type="radio"
+                        name="selectedSlot"
+                        value="<%= availability._id %>|<%= slot.time %>"
+                        required
+                    >
+
+                    <%= slot.time %>
+
+                </label>
+
+                <br>
+
+            <% } %>
+
+        <% }) %>
+
+    <% }) %>
+
+
+    <br>
+
+    <button type="submit">
+        Reschedule Appointment
+    </button>
+
+</form>
+
+</body>
+
+</html>

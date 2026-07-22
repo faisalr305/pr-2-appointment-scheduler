@@ -15,11 +15,7 @@ Appointment Scheduler is a full-stack web application that allows users to book,
 ![PROVIDER DASHBOARD](![alt text](<Screenshot 2026-07-22 104725.png>))
 
 
-
-
-
-
-
+s
 ## Technologies Used
 
 ### Frontend

@@ -20,21 +20,30 @@ router.get("/", isSignedIn, requireRole("customer"), async (req, res) => {
     }
 });
 
-router.get("/new", isSignedIn, requireRole("customer"), async (req, res) => {
-    try {
-        const providers = await User.find({ role: "provider" });
-        const availabilities = await Availability.find({
-            "slots.status": "available"
-        }).populate("provider");
+router.get("/new", isSignedIn, async (req, res) => {
 
-        res.render("appointments/new.ejs", {
-            providers,
-            availabilities
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error.message);
-    }
+    const providers = await User.find({
+        role: "provider"
+    });
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const availabilities = await Availability.find({
+        date: {
+            $gte: today
+        },
+
+        "slots.status": "available"
+    })
+    .populate("provider");
+
+    res.render("appointments/new.ejs", {
+        providers,
+        availabilities
+    });
+
 });
 
 router.post("/", isSignedIn, requireRole("customer"), async (req, res) => {
@@ -309,6 +318,126 @@ router.post("/search", isSignedIn, async (req, res) => {
         console.log(error);
         res.send(error)
     }
-})
+});
+router.get("/:appointmentId/reschedule", isSignedIn, async (req, res) => {
+
+    const appointment = await Appointment.findById(
+        req.params.appointmentId
+    );
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    const availabilities = await Availability.find({
+        date: {
+            $gte: today
+        },
+
+        "slots.status": "available"
+    })
+    .populate("provider");
+
+    res.render("appointments/reschedule.ejs", {
+        appointment,
+        availabilities
+    });
+
+});
+router.post(
+    "/:appointmentId/reschedule",
+    isSignedIn,
+    async (req, res) => {
+
+        const appointment = await Appointment.findById(
+            req.params.appointmentId
+        );
+
+        const [newAvailabilityId, newTime] =
+            req.body.selectedSlot.split("|");
+
+
+        const newAvailability =
+            await Availability.findById(
+                newAvailabilityId
+            );
+
+
+        const newSlot = newAvailability.slots.find(
+            slot => slot.time === newTime
+        );
+
+
+        if (!newSlot || newSlot.status !== "available") {
+
+            return res.send(
+                "This slot is no longer available."
+            );
+
+        }
+
+
+        // Find the old availability
+        const oldAvailability =
+            await Availability.findById(
+                appointment.availability
+            );
+
+
+        if (oldAvailability) {
+
+            const oldSlot =
+                oldAvailability.slots.find(
+                    slot =>
+                        slot.appointment &&
+                        slot.appointment.toString() ===
+                        appointment._id.toString()
+                );
+
+
+            if (oldSlot) {
+
+                oldSlot.status = "available";
+
+                oldSlot.appointment = null;
+
+            }
+
+            await oldAvailability.save();
+
+        }
+
+
+        // Book the new slot
+        newSlot.status = "booked";
+
+        newSlot.appointment = appointment._id;
+
+
+        // Update appointment
+        appointment.availability =
+            newAvailability._id;
+
+        appointment.date =
+            newAvailability.date;
+
+        appointment.startTime =
+            newTime;
+
+        appointment.status =
+            "rescheduled";
+
+
+        await appointment.save();
+
+        await newAvailability.save();
+
+
+        res.redirect(
+            `/appointments/${appointment._id}`
+        );
+
+    }
+);
 
 module.exports = router;
